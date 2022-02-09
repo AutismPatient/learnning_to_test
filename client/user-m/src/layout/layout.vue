@@ -1,11 +1,12 @@
+<!--管理端模板页-->
 <template>
-  <div id="app-main">
+  <div class="layout-main">
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App"
+  name: "layout"
 }
 </script>
