@@ -6,7 +6,10 @@ import {createRouter, createWebHistory} from "vue-router";
 const routers = [
     {
         path: "/login",
-        component: () => import('@/views/login')
+        component: () => import('@/views/login'),
+        meta: {
+            title: "登录到 user m",
+        }
     },
     {
         path: "/",
@@ -14,7 +17,9 @@ const routers = [
         children: [
             {
                 path: "/dashboard",
-                title: "系统仪表盘",
+                meta: {
+                    title: "系统仪表盘",
+                },
                 component: () => import("@/views/dashboard")
             }
         ]
