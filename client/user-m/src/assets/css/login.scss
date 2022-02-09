@@ -1,3 +1,39 @@
 .login {
-
+  background: rgb(224, 228, 232);
+  display: flex;
+  font-size: 14px;
+  flex-grow: 1;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  .login__content{
+    border-radius: 4px;
+    width: 480px;
+    background-color: #222270;
+    .header,.footer{
+      padding: 12px;
+      color: white;
+    }
+    .header{
+      font-size: 2rem;
+      margin: 20px 0;
+      text-decoration: underline;
+    }
+    .main {
+      background-color: white;
+      padding: 16px;
+      .action__button{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        div{
+          text-align: right;
+        }
+      }
+    }
+    .footer{
+      padding: 12px;
+      text-align: center;
+    }
+  }
 }
