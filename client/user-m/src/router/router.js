@@ -8,7 +8,7 @@ const routers = [
         path: "/login",
         component: () => import('@/views/login'),
         meta: {
-            title: "登录到 user m",
+            title: "登录到 management system",
         }
     },
     {
