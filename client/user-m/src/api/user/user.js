@@ -2,9 +2,9 @@
 
 import {request} from "@/api/request";
 
-export function getUserInfo(id){
+export function getUserInfo(){
     return request({
-        url: "/user/get/" + id,
+        url: "/user/get",
         method: "get",
     })
 }

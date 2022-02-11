@@ -12,13 +12,31 @@ const routers = [
         }
     },
     {
+        path: "/403",
+        component: () => import("@/views/common/403"),
+        meta: {
+            title: "无权限访问"
+        }
+    },
+    {
+        path: "/404",
+        component: () => import("@/views/common/404"),
+        meta: {
+            title: "404"
+        }
+    },
+    {
         path: "/",
         component: () => import("@/layout/layout"),
+        redirect: to => {
+          return {path: "/dashboard"}
+        },
         children: [
             {
                 path: "/dashboard",
                 meta: {
                     title: "系统仪表盘",
+                    requireAuth: true
                 },
                 component: () => import("@/views/dashboard")
             }

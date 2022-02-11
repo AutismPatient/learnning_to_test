@@ -1,13 +1,10 @@
 <template>
   <div class="dashboard-main">
-    <h1>666</h1>
+    666
   </div>
 </template>
 
-<script>
-export default {
-  name: "dashboard"
-}
+<script setup>
 </script>
 
 <style scoped>

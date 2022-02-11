@@ -1,6 +1,6 @@
 // element ui plus 一些封装
 
-import {ElMessage} from "element-plus"
+import {ElMessage,ElMessageBox} from "element-plus"
 
 let messageUI = null
 
@@ -40,3 +40,16 @@ export function errorMessage(msg) {
 }
 
 export const showMessage = mainMessage
+
+
+let messageBoxUI = null
+
+const mainBox = function () {
+    if(messageBoxUI){
+        messageBoxUI.close()
+    }
+    messageBoxUI = ElMessageBox
+    return messageBoxUI
+}
+
+export const messageBox = mainBox()

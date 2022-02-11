@@ -35,13 +35,13 @@
 </template>
 
 <script setup>
-import {computed, reactive, ref,getCurrentInstance} from "vue";
+import {computed, inject, reactive, ref} from "vue";
+import {useStore} from "vuex";
+import {useRoute} from "vue-router"
 import {login} from "@/api/user/user";
-import {ElMessageBox} from "element-plus";
-import {useCookies} from 'vue3-cookies'
-let {proxy} = getCurrentInstance()
-const ck = useCookies().cookies
 
+const $messageAlert = inject("$messageAlert")
+const $successMessage = inject("$successMessage")
 const loginRequest = reactive({
   userName: '',
   userPassword: '',
@@ -50,6 +50,8 @@ const loginRequest = reactive({
 const loginDisabled = computed(() => {
   return !(loginRequest.userName !== "" && loginRequest.userPassword !== "")
 })
+const store = useStore()
+const router = useRoute()
 const loginRule = reactive({
   userName: [
     {
@@ -76,23 +78,23 @@ let refForm = ref()
 let loading = ref(false)
 // 登录操作
 const loginPost = () => {
-  refForm.value.validate((v)=> {
-    if(v) {
+  refForm.value.validate((v) => {
+    if (v) {
       loading.value = true
-      login(loginRequest).then((resp)=>{
-        if(resp.data.code === "success"){
-          ck.set("token",resp.data.data,60 * 60 * 24 * 3)
-          proxy.$successMessage("登录成功")
-        }else{
-          ElMessageBox.alert("登录错误：" + resp.data.msg,"提示",{
+      login(loginRequest).then((resp) => {
+        if (resp.data.code === "success") {
+          $successMessage("登录成功")
+          store.dispatch("writeUser", {data: resp.data.data, query: router.query.redirect || "/"})
+        } else {
+          $messageAlert.alert("登录错误：" + resp.data.msg, "提示", {
             confirmButtonText: "确认",
             type: "error"
           })
         }
-      }).finally(()=>{
+      }).finally(() => {
         loading.value = false
       })
-    }else {
+    } else {
       return false
     }
   })

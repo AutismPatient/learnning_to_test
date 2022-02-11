@@ -2,6 +2,8 @@
 import axios from 'axios'
 import {useCookies} from 'vue3-cookies'
 import {ElMessageBox} from "element-plus";
+import {errorMessage} from "@/assets/js/element_pack";
+
 const qs = require('qs');
 
 const {cookies} = useCookies()
@@ -23,11 +25,17 @@ instance.interceptors.request.use((config) => {
     if (token) {
         config.headers["auth-token"] = token
     }
-    if(config.method === "post"){
+    if(config.method === "post"){ // playReload
         config.headers["contentType"] = "application/json"
     }
     return config
 }, (error) => {
+    ElMessageBox.alert("请求错误", "温馨提示", {
+        type: "warning",
+        confirmButtonText: "确定"
+    }).then(() => {
+        console.log(error)
+    })
     return Promise.reject(error)
 })
 
@@ -36,18 +44,12 @@ instance.interceptors.response.use((response) => {
     return Promise.resolve(response)
 }, (error) => {
     const {status} = error.request
-    let message = "请求错误"
     if (status === 401 || status === 403) {
-        message = "您无权访问，请联系管理员"
+        errorMessage("您无权访问，请联系管理员")
     } else if (status >= 500) {
-        message = "服务器内部错误：" + error
+        errorMessage("服务器内部错误：" + error)
     } else if (status === 400){
-        message = "参数错误"
+        errorMessage("参数错误")
     }
-    ElMessageBox.alert(message, "温馨提示", {
-        type: "warning",
-        confirmButtonText: "确定"
-    }).then(() => {
-    })
     return Promise.reject(error)
 })

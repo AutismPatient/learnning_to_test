@@ -1,0 +1,30 @@
+
+$borderColor: #ebeef5;
+$textColor: #606266;
+
+.layout-main{
+  .header{
+    border-bottom: 1px solid $borderColor;
+    color: $textColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo{
+      display: flex;
+      align-items: center;
+      a {
+        width: 128px;
+      }
+    }
+  }
+  .main-div{
+
+  }
+  .menu__list{
+    color: $textColor;
+    padding: 20px;
+    display: flex;
+    height: 100vh;
+    border-right: 1px solid $borderColor;
+  }
+}
