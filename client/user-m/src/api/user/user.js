@@ -15,3 +15,10 @@ export function login(data){
         data: data
     })
 }
+export function getUsers(query){
+    return request({
+        url: "/user/list",
+        method: "get",
+        params: query
+    })
+}

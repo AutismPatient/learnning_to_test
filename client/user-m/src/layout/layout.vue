@@ -5,18 +5,16 @@
       <el-header class="header">
         <Header />
       </el-header>
-      <el-container>
-        <div class="menu__list">
-          <el-aside width="250px">
-            <MenuList />
-          </el-aside>
-        </div>
-        <div class="main-div">
-          <el-main>
-            <router-view />
-          </el-main>
-        </div>
-      </el-container>
+      <div class="menu__list">
+        <el-aside width="250px">
+          <MenuList />
+        </el-aside>
+      </div>
+      <div class="main-div">
+        <el-main>
+          <router-view />
+        </el-main>
+      </div>
     </el-container>
   </div>
 </template>

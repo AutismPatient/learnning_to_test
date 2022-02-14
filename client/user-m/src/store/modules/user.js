@@ -1,7 +1,7 @@
-import {getUserInfo, login} from '@/api/user/user'
+import {getUserInfo} from '@/api/user/user'
 import {useCookies} from 'vue3-cookies'
 import {errorMessage} from "@/assets/js/element_pack";
-import router from "@/router/router";
+
 
 const ck = useCookies().cookies
 
@@ -17,21 +17,17 @@ const getters = {
 
 const mutations = {
     setUserInfo(state, d) {
-        state.userInfo = d.user
-        router.push({
-            path: d.query
-        }).then(()=>{})
+        state.userInfo = d
     }
 }
 
 
 const actions = {
-    async writeUser({commit},payload) {
+    async writeUser({commit}) {
         let user = {}
         await getUserInfo().then((ru) => {
             const {data} = ru.data
             if (data) {
-                ck.set("token", payload.data, 60 * 60 * 24 * 3)
                 user = data
             } else {
                 errorMessage("获取用户信息失败")
@@ -39,7 +35,11 @@ const actions = {
         }).catch((err) => {
             errorMessage("获取用户信息失败: " + err)
         })
-        commit('setUserInfo', {user,query: payload.query})
+        commit('setUserInfo', user)
+    },
+    async logout({commit}){
+        const ok = ck.remove("token")
+        if (ok) commit('setUserInfo',{})
     }
 }
 

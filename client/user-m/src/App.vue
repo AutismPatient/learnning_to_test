@@ -14,6 +14,10 @@ img{
   width: 100%;
   height: 100%;
 }
+a{
+  text-decoration: none;
+  color: inherit;
+}
 </style>
 <script>
 export default {

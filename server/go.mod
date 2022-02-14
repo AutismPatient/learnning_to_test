@@ -4,6 +4,8 @@ go 1.17
 
 require github.com/gin-gonic/gin v1.7.7
 
+require github.com/ahmetb/go-linq/v3 v3.2.0 // indirect
+
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-basic/uuid v1.0.0

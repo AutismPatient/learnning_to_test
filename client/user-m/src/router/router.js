@@ -12,14 +12,14 @@ const routers = [
         }
     },
     {
-        path: "/403",
-        component: () => import("@/views/common/403"),
+        path: "/401",
+        component: () => import("@/views/common/401"),
         meta: {
             title: "无权限访问"
         }
     },
     {
-        path: "/404",
+        path: "/:pathMatch(.*)*",
         component: () => import("@/views/common/404"),
         meta: {
             title: "404"
@@ -39,6 +39,33 @@ const routers = [
                     requireAuth: true
                 },
                 component: () => import("@/views/dashboard")
+            },
+            {
+                path: "/user",
+                meta: {
+                    title: "用户",
+                    requireAuth: true
+                },
+                component: () => import("@/views/user/index"),
+                children: [
+
+                ]
+            },
+            {
+                path: "/user/create",
+                meta: {
+                    title: "新增单个用户",
+                    requireAuth: true
+                },
+                component: () => import("@/views/user/create")
+            },
+            {
+                path: "/setting",
+                meta: {
+                    title: "设置",
+                    requireAuth: true
+                },
+                component: () => import("@/views/common/setting")
             }
         ]
     }

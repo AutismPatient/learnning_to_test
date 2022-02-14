@@ -38,7 +38,11 @@
 import {computed, inject, reactive, ref} from "vue";
 import {useStore} from "vuex";
 import {useRoute} from "vue-router"
+import router from "@/router/router";
 import {login} from "@/api/user/user";
+import {useCookies} from 'vue3-cookies';
+
+const ck = useCookies().cookies
 
 const $messageAlert = inject("$messageAlert")
 const $successMessage = inject("$successMessage")
@@ -51,7 +55,7 @@ const loginDisabled = computed(() => {
   return !(loginRequest.userName !== "" && loginRequest.userPassword !== "")
 })
 const store = useStore()
-const router = useRoute()
+const route = useRoute()
 const loginRule = reactive({
   userName: [
     {
@@ -76,6 +80,7 @@ const loginRule = reactive({
 })
 let refForm = ref()
 let loading = ref(false)
+const q = route.query.redirect || "/"
 // 登录操作
 const loginPost = () => {
   refForm.value.validate((v) => {
@@ -84,7 +89,12 @@ const loginPost = () => {
       login(loginRequest).then((resp) => {
         if (resp.data.code === "success") {
           $successMessage("登录成功")
-          store.dispatch("writeUser", {data: resp.data.data, query: router.query.redirect || "/"})
+          ck.set("token", resp.data.data, 60 * 60 * 24 * 3)
+          store.dispatch("writeUser").then(()=>{
+            router.push({
+              path: q
+            })
+          })
         } else {
           $messageAlert.alert("登录错误：" + resp.data.msg, "提示", {
             confirmButtonText: "确认",

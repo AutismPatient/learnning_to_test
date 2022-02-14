@@ -3,8 +3,7 @@ import axios from 'axios'
 import {useCookies} from 'vue3-cookies'
 import {ElMessageBox} from "element-plus";
 import {errorMessage} from "@/assets/js/element_pack";
-
-const qs = require('qs');
+import NProgress from 'nprogress'
 
 const {cookies} = useCookies()
 
@@ -21,6 +20,7 @@ export function request(config) {
 
 // 请求拦截
 instance.interceptors.request.use((config) => {
+    NProgress.start()
     const token = cookies.get("token")
     if (token) {
         config.headers["auth-token"] = token
@@ -41,6 +41,7 @@ instance.interceptors.request.use((config) => {
 
 // 响应拦截
 instance.interceptors.response.use((response) => {
+    NProgress.done()
     return Promise.resolve(response)
 }, (error) => {
     const {status} = error.request
@@ -51,5 +52,6 @@ instance.interceptors.response.use((response) => {
     } else if (status === 400){
         errorMessage("参数错误")
     }
+    NProgress.done()
     return Promise.reject(error)
 })

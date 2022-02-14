@@ -1,10 +1,11 @@
 <template>
   <div class="dashboard-main">
-    666
+    <panel-group />
   </div>
 </template>
 
 <script setup>
+import PanelGroup from "@/components/panelGroup";
 </script>
 
 <style scoped>
