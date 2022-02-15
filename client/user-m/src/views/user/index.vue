@@ -14,7 +14,7 @@
     </el-form-item>
   </el-form>
 
-  <el-table :data="users.data" stripe style="width: 100%" border>
+  <el-table v-loading="$loading" :data="users.data" stripe style="width: 100%" border>
     <template #empty>
       <el-empty>
         <el-button type="warning" plain @click="get">刷新</el-button>
@@ -48,18 +48,21 @@
 </template>
 
 <script setup>
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {getUsers} from "@/api/user/user";
 import {errorMessage} from "@/assets/js/element_pack";
 
 let users = reactive({data: [], total: 0})
-
+let $loading = ref(false)
 const get = () => {
+  $loading.value = true
   getUsers(formInline).then((resp) => {
     users.data = resp.data.data
     users.total = resp.data.total
   }).catch((err) => {
     errorMessage(err)
+  }).finally(()=>{
+    $loading.value = false
   })
 }
 
